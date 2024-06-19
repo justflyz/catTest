@@ -2,10 +2,9 @@
 pragma solidity ^0.8.22;
 
 /**
- * @notice CatERC20 Factory. Helps with deploying CatERC20 to the same address across-chains.
- * @dev This contract has differences to CatERC20 including:
- * 1. Usage of CREATE2 instead of CREATE3. This makes CatERC20 cheaper to use but more expensive to deploy.
- * 2. No burn limits, CatERC20 tokens do not have burn limits and as a result, the burn arguments are not needed.
+
+ * 1. Usage of CREATE2 instead of CREATE3. This makes cheaper to use but more expensive to deploy.
+ * 2. No burn limits, tokens do not have burn limits and as a result, the burn arguments are not needed.
  * 3. Ability to deploy a token on behalf of another account.
  */
 contract CatERC20Factory is IXERC20Factory {
@@ -32,7 +31,7 @@ contract CatERC20Factory is IXERC20Factory {
   }
 
   /**
-   * @notice Deploys an CatERC20 contract using CREATE2.
+   * @notice Deploys contract using CREATE2.
    * @dev limits and minters must be the same length.
    * @param name The name of the token.
    * @param symbol The symbol of the token.
@@ -56,15 +55,7 @@ contract CatERC20Factory is IXERC20Factory {
     emit XERC20Deployed(caterc20);
   }
 
-  /**
-   * @notice Deploys an XERC20Lockbox contract using CREATE2.
-   *
-   * @dev When deploying a lockbox for the gas token of the chain, then, the base token needs to be address(0).
-   * @param caterc20 The address of the caterc20 that you want to deploy a lockbox for.
-   * @param baseToken The address of the base token that you want to lock.
-   * @param isNative Whether or not the base token is the native (gas) token of the chain. Eg: MATIC for polygon chain.
-   * @return lockbox The address of the lockbox.
-   */
+  
   function deployLockbox(
     address caterc20,
     address baseToken,
@@ -105,15 +96,7 @@ contract CatERC20Factory is IXERC20Factory {
     CatERC20(caterc20).transferOwnership(msg.sender);
   }
 
-  /**
-   * @notice Deploys an XERC20 contract using CREATE2.
-   * @dev _limits and _minters must be the same length.
-   * @param name The name of the token.
-   * @param symbol The symbol of the token.
-   * @param owner The owner of the address, used in the salt. It is expected.
-   * that ownership is transferred to this address.
-   * @return caterc20 The address of the xerc20.
-   */
+  
   function _deployXERC20(
     string calldata name,
     string calldata symbol,
@@ -127,19 +110,7 @@ contract CatERC20Factory is IXERC20Factory {
     caterc20 = address(new CatERC20{salt: fullySalt}(name, symbol, address(this)));
   }
 
-  /**
-   * @notice Deploys an XERC20Lockbox contract using CREATE2.
-   *
-   * @dev When deploying a lockbox for the gas token of the chain, then, the base token needs to be address(0).
-   * Does not set the lockbox on the CatERC20 token, only deploying the 
-   * lockbox itself.
-   * msg.sender is not included in the lockbox salt. This is not needed.
-   * since a lockbox is a non-ownable contract and is pure logic.
-   * @param caterc20 The address of the caterc20 that you want to deploy a lockbox for.
-   * @param baseToken The address of the base token that you want to lock.
-   * @param isNative Whether or not the base token is the native (gas) token of the chain. Eg: MATIC for polygon chain.
-   * @return lockbox The address of the lockbox.
-   */
+  
   function _deployLockbox(
     address caterc20,
     address baseToken,
@@ -152,12 +123,7 @@ contract CatERC20Factory is IXERC20Factory {
     return lockbox;
   }
 
-  /**
-   * @notice Set bridge limits.
-   *
-   * @param minterLimits The array of limits that you are adding (optional, can be an empty array).
-   * @param bridges The array of bridges that you are adding (optional, can be an empty array). 
-   */
+ 
   function _setBridgeLimits(
     address caterc20,
     uint256[] calldata minterLimits,
