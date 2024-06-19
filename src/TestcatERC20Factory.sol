@@ -9,14 +9,7 @@ pragma solidity ^0.8.22;
  */
 contract CatERC20Factory is IXERC20Factory {
 
-  /**
-   * @notice Deploys an CatERC20 contract using CREATE2.
-   * @dev limits and minters must be the same length.
-   * @param name The name of the token.
-   * @param symbol The symbol of the token.
-   * @param owner The owner of the token.
-   * @return caterc20 The address of the xerc20.
-   */
+
   function deployXERC20(
     string calldata name,
     string calldata symbol,
