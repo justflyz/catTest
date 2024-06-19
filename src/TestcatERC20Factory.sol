@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
 
-import { IXERC20Factory } from './interfaces/IXERC20Factory.sol';
-
-import { CatERC20 } from './CatERC20.sol';
-import { CatLockbox } from './CatLockbox.sol';
-
 /**
  * @notice CatERC20 Factory. Helps with deploying CatERC20 to the same address across-chains.
  * @dev This contract has differences to CatERC20 including:
